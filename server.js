@@ -16,7 +16,6 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 app.get("/views/parsedHeader", function (req, res) {
-  //got this from online , and tested on glitch and it works but need to understand each command
      let headerObject = req.headers
      //the x-forwarded-for property of the header does not appear for local host so add an alternative or will
      //error out locally on split to get the ip address the rest of the requests are common to loacl and remote
