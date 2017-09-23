@@ -15,7 +15,9 @@ app.use(express.static('public'));
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
-
+app.get("/views/parsedHeader", function (request, response) {
+  response.end(request.connection.remoteAddress)
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
