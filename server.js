@@ -15,8 +15,17 @@ app.use(express.static('public'));
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
-app.get("/views/parsedHeader", function (request, response) {
-  response.end(request.connection.remoteAddress)
+app.get("/views/parsedHeader", function (req, res) {
+  //got this from online , and tested on glitch and it works but need to understand each command
+     let headerObject = req.headers
+     //the x-forwarded-for property of the header does not appear for local host so add an alternative or will
+     //error out locally on split to get the ip address the rest of the requests are common to loacl and remote
+     let ip = (headerObject['x-forwarded-for']||req.socket.remoteAddress).split(",")[0];
+     let language = headerObject['accept-language'].split(",")[0];
+     let software = headerObject['user-agent'].split('(')[1].split(')')[0]
+     //console.log([ip,language,software])
+     let result = {"ipaddress":ip,"language":language,"software":software}
+     res.end(JSON.stringify(result))
 });
 
 // listen for requests :)
